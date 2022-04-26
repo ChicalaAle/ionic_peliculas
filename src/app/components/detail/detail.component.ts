@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Cast, MovieDetail } from 'src/app/interfaces/interfaces';
+import { LocalDataService } from 'src/app/services/local-data.service';
 import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class DetailComponent implements OnInit {
 
   constructor(
     private movieService: MovieService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private localData: LocalDataService
     ) { }
 
   ngOnInit() {
@@ -54,6 +56,9 @@ export class DetailComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
+  makeFavorite(){
+    this.localData.saveMovie(this.movie);
+  }
   
 
 }

@@ -13,19 +13,47 @@
     debounce="700"
     [value]="searchValue"
     (ionChange)="search($event)"
-    mode="ios"
+    
   ></ion-searchbar>
 </ion-toolbar>
 
 <ion-content>
 
-  <ion-list>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col class="center">
+        <ion-spinner name="crescent" *ngIf="searching"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngIf="searchedMovies.length === 0">
     <ion-list-header>
       <ion-label>Sugeridos:</ion-label>
     </ion-list-header>
     <ion-item *ngFor="let suggest of suggests">
-      <ion-label  color="primary">{{suggest}}</ion-label>
+      <ion-label (click)="searchValue = suggest" color="primary">{{suggest}}</ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6" *ngFor="let movie of searchedMovies">
+
+        <ion-card (click)="showMovieDetail(movie.id)">
+          <img [src]="movie.poster_path | imagen" alt="">
+          <ion-card-header>
+            <ion-card-subtitle> {{movie.release_date}} </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            {{movie.title}}
+          </ion-card-content>
+
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

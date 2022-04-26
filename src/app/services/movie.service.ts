@@ -35,7 +35,6 @@ export class MovieService {
 
     return this.query<ResponseMDB>(query);
 
-
   }
 
   getFeature(){
@@ -64,6 +63,11 @@ export class MovieService {
 
   getActors(id: string){
     return this.query<CreditsResponse>(`/movie/${id}/credits?a=1`);
+  }
+
+
+  searchMovie(movie: string){
+    return this.query<ResponseMDB>(`/search/movie?query=${movie}`);
   }
 
 
