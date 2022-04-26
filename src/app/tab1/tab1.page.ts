@@ -11,28 +11,47 @@ import { MovieService } from '../services/movie.service';
 export class Tab1Page implements OnInit {
 
   recentMovies: Movie[] = [];
-  public slideOpts = {
-    slidesPerView: 1.5,
-    freeMode: true,
-    initialSlide: 0,
-    speed: 250
-  };
+  popularMovies: Movie[] = [];
+  
   constructor(private MovieService: MovieService) {}
 
   ngOnInit(): void {
     this.showFeatures();
+    this.showPopular(); 
   }
+  
   showFeatures(){
     
     this.MovieService.getFeature().subscribe(
       resp => {
 
-        console.log(resp);
+        // console.log(resp);
         this.recentMovies = resp.results;
 
       }
     );
 
   }
+
+  showPopular(){
+    this.MovieService.getPopular().subscribe(
+      resp => {
+        
+        /*
+          Llegan de manera asincrona, por eso guardar en una variable
+          para posteriormente utilizarlo.
+        */
+        const arrTemp = [...this.popularMovies, ...resp.results];
+
+
+        this.popularMovies = arrTemp;
+      }
+    )
+  }
+
+  loadMore(){
+    this.showPopular();
+  }
+
 
 }

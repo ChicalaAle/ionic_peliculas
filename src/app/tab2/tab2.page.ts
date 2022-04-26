@@ -7,6 +7,18 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
+  public searchValue: string = '';
+  public suggests: string[] = [
+    'SpiderMan',
+    'Venom',
+    'El lobo de wall street'
+  ];
+  
+
   constructor() {}
+
+  public search(event){
+    console.log(event);
+  }
 
 }
